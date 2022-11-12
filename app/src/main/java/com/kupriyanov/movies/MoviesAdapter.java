@@ -1,5 +1,6 @@
 package com.kupriyanov.movies;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +22,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     private List<Movie> movies = new ArrayList<>();
     private OnReachEndListener onReachEndListener;
+    private OnMovieClickListener clickForDetail;
 
     public void setOnReachEndListener(OnReachEndListener onReachEndListener) {
         this.onReachEndListener = onReachEndListener;
+    }
+
+    public void setClickForDetail(OnMovieClickListener clickForDetail) {
+        this.clickForDetail = clickForDetail;
     }
 
     public void setMovies(List<Movie> movies) {
@@ -43,7 +49,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Log.d("MoviesAdapter", "onBindViewHolder" + position);
         Movie movie = movies.get(position);
         Glide.with(holder.imageViewPoster)
                 .load(movie.getPoster().getUrl())
@@ -52,7 +57,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         int backgroundId;
         if (rating > 7) {
             backgroundId = R.drawable.circle_green;
-        } else if (rating > 5){
+        } else if (rating > 5) {
             backgroundId = R.drawable.circle_orange;
         } else {
             backgroundId = R.drawable.circle_red;
@@ -65,13 +70,26 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         String result = String.format("%.1f", rating);
         holder.textViewRating.setBackground(background);
         holder.textViewRating.setText(String.valueOf(result));
-        if (position >= movies.size() - 10 && onReachEndListener != null){
+        if (position >= movies.size() - 10 && onReachEndListener != null) {
             onReachEndListener.onReachEnd();
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (clickForDetail != null) {
+                    clickForDetail.onMovieClick(movie);
+                }
+            }
+        });
     }
 
     interface OnReachEndListener {
         void onReachEnd();
+    }
+
+    interface OnMovieClickListener {
+        void onMovieClick(Movie movie);
     }
 
     @Override

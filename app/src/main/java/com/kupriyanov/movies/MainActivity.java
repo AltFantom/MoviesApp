@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         progressBarLoading = findViewById(R.id.progressBarLoading);
         recyclerView = findViewById(R.id.recyclerViewMovies);
+
         moviesAdapter = new MoviesAdapter();
         recyclerView.setAdapter(moviesAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -40,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Movie> movies) {
                 moviesAdapter.setMovies(movies);
+            }
+        });
+        moviesAdapter.setClickForDetail(new MoviesAdapter.OnMovieClickListener() {
+            @Override
+            public void onMovieClick(Movie movie) {
+                Intent intent = MovieDetailActivity.newIntant(MainActivity.this, movie);
+                startActivity(intent);
             }
         });
         moviesAdapter.setOnReachEndListener(new MoviesAdapter.OnReachEndListener() {
