@@ -1,8 +1,6 @@
 package com.kupriyanov.movies;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<Movie> movies = new ArrayList<>();
     private OnReachEndListener onReachEndListener;
@@ -28,7 +26,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         this.onReachEndListener = onReachEndListener;
     }
 
-    public void setClickForDetail(OnMovieClickListener clickForDetail) {
+    public void setOnClickMovieListener(OnMovieClickListener clickForDetail) {
         this.clickForDetail = clickForDetail;
     }
 

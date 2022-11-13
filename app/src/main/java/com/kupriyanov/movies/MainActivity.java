@@ -1,5 +1,6 @@
 package com.kupriyanov.movies;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,20 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class MainActivity extends AppCompatActivity {
 
     private MainViewModel viewModel;
-    private MoviesAdapter moviesAdapter;
+    private MovieAdapter moviesAdapter;
     private RecyclerView recyclerView;
     private ProgressBar progressBarLoading;
 
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         progressBarLoading = findViewById(R.id.progressBarLoading);
         recyclerView = findViewById(R.id.recyclerViewMovies);
 
-        moviesAdapter = new MoviesAdapter();
+        moviesAdapter = new MovieAdapter();
         recyclerView.setAdapter(moviesAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -44,14 +42,14 @@ public class MainActivity extends AppCompatActivity {
                 moviesAdapter.setMovies(movies);
             }
         });
-        moviesAdapter.setClickForDetail(new MoviesAdapter.OnMovieClickListener() {
+        moviesAdapter.setOnClickMovieListener(new MovieAdapter.OnMovieClickListener() {
             @Override
             public void onMovieClick(Movie movie) {
-                Intent intent = MovieDetailActivity.newIntant(MainActivity.this, movie);
+                Intent intent = MovieDetailActivity.newIntent(MainActivity.this, movie);
                 startActivity(intent);
             }
         });
-        moviesAdapter.setOnReachEndListener(new MoviesAdapter.OnReachEndListener() {
+        moviesAdapter.setOnReachEndListener(new MovieAdapter.OnReachEndListener() {
             @Override
             public void onReachEnd() {
                 viewModel.loadMovies();
@@ -67,5 +65,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.itemFavourite) {
+            Intent intent = FavouriteMoviesActivity.newIntent(this);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

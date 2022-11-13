@@ -14,50 +14,67 @@
             android:id="@+id/imageViewPoster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             android:adjustViewBounds="true"
-            tools:src="@tools:sample/avatars"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPoster"
-            tools:text="Title"
             android:padding="8dp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPoster"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/textViewYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-            tools:text="1989"
             android:padding="8dp"
             android:textColor="@android:color/holo_orange_light"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+            tools:text="1989" />
 
         <TextView
             android:id="@+id/textViewDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/textViewYear"
-            tools:text="Description of movie"
             android:padding="8dp"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewYear"
+            tools:text="Description of movie" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTrailers"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
-            tools:listitem="@layout/trailer_item"
-            android:nestedScrollingEnabled="false">
+            tools:listitem="@layout/trailer_item" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewTrailers"
+            tools:listitem="@layout/review_item" />
+
+        <ImageView
+            android:id="@+id/imageViewStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPoster"
+            app:layout_constraintEnd_toEndOf="@id/imageViewPoster"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPoster"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

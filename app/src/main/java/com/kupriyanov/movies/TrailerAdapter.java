@@ -11,9 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerHolderView> {
+public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
 
     private List<Trailer> trailers = new ArrayList<>();
+    private OnTrailerClickListener onTrailerClickListener;
+
+    public void setOnTrailerClickListener(OnTrailerClickListener onTrailerClickListener) {
+        this.onTrailerClickListener = onTrailerClickListener;
+    }
 
     public void setTrailers(List<Trailer> trailers) {
         this.trailers = trailers;
@@ -22,19 +27,27 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerH
 
     @NonNull
     @Override
-    public TrailerHolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TrailerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.trailer_item,
                 parent,
                 false
         );
-        return new TrailerHolderView(view);
+        return new TrailerViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TrailerHolderView holder, int position) {
+    public void onBindViewHolder(@NonNull TrailerViewHolder holder, int position) {
         Trailer trailer = trailers.get(position);
         holder.textViewTrailerName.setText(trailer.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onTrailerClickListener != null) {
+                    onTrailerClickListener.onTrailerClick(trailer);
+                }
+            }
+        });
     }
 
     @Override
@@ -42,11 +55,15 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerH
         return trailers.size();
     }
 
-    static class TrailerHolderView extends RecyclerView.ViewHolder {
+    interface OnTrailerClickListener {
+        void onTrailerClick(Trailer trailer);
+    }
+
+    static class TrailerViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView textViewTrailerName;
 
-        public TrailerHolderView(@NonNull View itemView) {
+        public TrailerViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTrailerName = itemView.findViewById(R.id.textViewTrailerName);
         }
