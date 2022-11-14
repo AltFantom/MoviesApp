@@ -19,9 +19,8 @@ import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MovieDetailViewModel extends AndroidViewModel {
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private final static String TAG = "MovieDetailViewModel";
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private final MutableLiveData<List<Trailer>> trailers = new MutableLiveData<>();
     private final MutableLiveData<List<Review>> reviews = new MutableLiveData<>();
@@ -46,7 +45,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
     }
 
     public void loadTrailers(int id) {
-        Disposable disposable = ApiFactory.apiService.loadTrailers(525)//id
+        Disposable disposable = ApiFactory.apiService.loadTrailers(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<TrailerResponse, List<Trailer>>() {

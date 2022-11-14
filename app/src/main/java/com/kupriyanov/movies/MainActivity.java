@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MainViewModel viewModel;
     private MovieAdapter moviesAdapter;
-    private RecyclerView recyclerView;
     private ProgressBar progressBarLoading;
 
     @Override
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progressBarLoading = findViewById(R.id.progressBarLoading);
-        recyclerView = findViewById(R.id.recyclerViewMovies);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewMovies);
 
         moviesAdapter = new MovieAdapter();
         recyclerView.setAdapter(moviesAdapter);

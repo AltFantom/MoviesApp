@@ -1,5 +1,7 @@
 package com.kupriyanov.movies;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -7,7 +9,7 @@ import java.io.Serializable;
 public class Rating implements Serializable {
 
     @SerializedName("kp")
-    private double kp;
+    private final double kp;
 
     public Rating(double kp) {
         this.kp = kp;
@@ -17,10 +19,4 @@ public class Rating implements Serializable {
         return kp;
     }
 
-    @Override
-    public String toString() {
-        return "Rating{" +
-                "kp='" + kp + '\'' +
-                '}';
-    }
 }

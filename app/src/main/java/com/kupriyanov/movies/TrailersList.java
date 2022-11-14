@@ -7,7 +7,7 @@ import java.util.List;
 public class TrailersList {
 
     @SerializedName("trailers")
-    private List<Trailer> trailerList;
+    private final List<Trailer> trailerList;
 
     public TrailersList(List<Trailer> trailerList) {
         this.trailerList = trailerList;

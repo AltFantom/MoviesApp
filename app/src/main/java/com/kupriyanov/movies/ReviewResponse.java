@@ -8,7 +8,7 @@ import java.util.List;
 public class ReviewResponse {
 
     @SerializedName("docs")
-    private List<Review> reviews = new ArrayList<>();
+    private final List<Review> reviews;
 
     public ReviewResponse(List<Review> reviews) {
         this.reviews = reviews;

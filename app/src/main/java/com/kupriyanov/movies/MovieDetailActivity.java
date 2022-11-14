@@ -22,7 +22,6 @@ import java.util.List;
 public class MovieDetailActivity extends AppCompatActivity {
 
     private static final String EXTRA_MOVIE = "movie";
-    private static final String TAG = "MovieDetailActivity";
 
     private ImageView imageViewPoster;
     private TextView textViewTitle;
